@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My ImageScraping</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="action_retrofit">"Scraping using Retrofit"</string>
+    <string name="action_jsoup">"Scraping using Jsoup"</string>
+    <string name="action_Run">"Run"</string>
+
+    <string name="target_url">"https://pixabay.com/ko/photos/?q=test"</string>
+</resources>
