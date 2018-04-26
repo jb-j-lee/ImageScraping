@@ -40,6 +40,10 @@ dependencies {
     //https://github.com/wasabeef/recyclerview-animators
     implementation 'jp.wasabeef:recyclerview-animators:2.2.3'
 
+    //https://github.com/square/leakcanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
