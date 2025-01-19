@@ -1,7 +1,6 @@
 package com.myjb.dev.network.jsoup;
 
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.myjb.dev.myapplication.BuildConfig;
@@ -18,6 +17,8 @@ import java.net.MalformedURLException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 public class ImageScraping extends AsyncTask<Void, Void, List<String>> {
 

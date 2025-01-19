@@ -2,8 +2,6 @@ package com.myjb.dev.myapplication;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 
 import com.myjb.dev.network.OnImageLinkListener;
 import com.myjb.dev.network.jsoup.ImageScraping;
@@ -14,6 +12,8 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 import okhttp3.HttpUrl;
 
 import static org.junit.Assert.*;

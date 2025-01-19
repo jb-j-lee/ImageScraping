@@ -4,18 +4,13 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.myjb.dev.network.OnImageLinkListener;
 import com.myjb.dev.network.jsoup.ImageScraping;
 import com.myjb.dev.network.retrofit.ImageCrawler;
@@ -23,30 +18,26 @@ import com.myjb.dev.network.retrofit.ImageCrawler;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindString;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import okhttp3.HttpUrl;
 
 public class ScrollingActivity extends AppCompatActivity {
 
-    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
     ImageAdapter adapter;
 
-    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.retrofit)
     FloatingActionButton retrofit;
 
-    @BindView(R.id.jsoup)
     FloatingActionButton jsoup;
 
-    @BindString(R.string.target_url)
     String target_url;
 
     @Override
@@ -54,9 +45,7 @@ public class ScrollingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
 
-        ButterKnife.setDebug(BuildConfig.DEBUG);
-        ButterKnife.bind(this);
-
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         adapter = new ImageAdapter(this);
@@ -68,16 +57,24 @@ public class ScrollingActivity extends AppCompatActivity {
                 return false;
             }
         };
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new SlideInUpAnimator());
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
+
+        retrofit = findViewById(R.id.retrofit);
+        retrofit.setOnClickListener(this::onRetrofitClicked);
+
+        jsoup = findViewById(R.id.jsoup);
+        jsoup.setOnClickListener(this::onJsoupClicked);
+
+        target_url = getString(R.string.target_url);
     }
 
-    @OnClick(R.id.retrofit)
-    public void onRetrofitClicked(View view) {
+    private void onRetrofitClicked(View view) {
         Snackbar.make(view, R.string.action_retrofit, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.action_Run, new View.OnClickListener() {
                     @Override
@@ -96,8 +93,7 @@ public class ScrollingActivity extends AppCompatActivity {
                 .show();
     }
 
-    @OnClick(R.id.jsoup)
-    public void onJsoupClicked(View view) {
+    private void onJsoupClicked(View view) {
         Snackbar.make(view, R.string.action_jsoup, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.action_Run, new View.OnClickListener() {
                     @Override
@@ -123,13 +119,11 @@ public class ScrollingActivity extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
 
-            @BindView(R.id.text)
             public TextView textView;
 
             public ViewHolder(View itemView) {
                 super(itemView);
-                ButterKnife.bind(this, itemView);
-//                textView = (TextView) itemView.findViewById(R.id.text);
+                textView = itemView.findViewById(R.id.text);
             }
         }
 

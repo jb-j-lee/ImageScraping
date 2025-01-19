@@ -1,6 +1,5 @@
 package com.myjb.dev.network.retrofit;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.myjb.dev.myapplication.BuildConfig;
@@ -19,6 +18,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.Nullable;
 import okhttp3.ConnectionPool;
 import okhttp3.Dispatcher;
 import okhttp3.HttpUrl;
@@ -31,7 +31,6 @@ import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Url;
 
 /**
