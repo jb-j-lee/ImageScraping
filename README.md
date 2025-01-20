@@ -1,10 +1,12 @@
-# Android ImageScraping Application Sample
-===================================
+<h1>My Image Scraping</h1>
 
-This sample demonstrates how to scraping image url at site.
+<p>
+  <a href="https://kotlinlang.org"><img alt="Kotlin Version" src="https://img.shields.io/badge/Kotlin-1.9.22-blueviolet.svg?style=flat"/></a>
+  <a href="https://android-arsenal.com/api?level=24"><img alt="API" src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=flat"/></a>
+  <a href="https://developer.android.com/studio/releases/gradle-plugin"><img alt="AGP" src="https://img.shields.io/badge/AGP-8.5.2-blue?style=flat"/></a>
+</p>
 
-Introduction
-------------
+<img src="/screen/main.png" width="30%" height="30%" title="main" alt="main"/>
 
 This sample demonstrates how to scraping image url at site on Android.
 
@@ -15,13 +17,24 @@ This sample demonstrates how to scraping image url at site on Android.
 In some cases, you may want to customize this specific url. When doing so, change the url.
 For an example, see this sample's `target_url` string.xml.
 
+# Android
 
-Pre-requisites
---------------
+- Supports Android Studio Koala
+- minsdk 24
+- targetSdk 35
+- AGP 8.5.2
+- Gradle 8.7
 
-- Android SDK 27
-- Android Build Tools v27.1.1
-- Android Support Repository
+
+# 3rd Party Libraries
+
+- [Jsoup](https://github.com/jhy/jsoup)
+
+
+# Build Dependency
+
+- [version catalog](https://developer.android.com/build/migrate-to-catalogs)
+
 
 License
 -------
