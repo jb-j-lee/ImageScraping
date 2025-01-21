@@ -1,55 +1,40 @@
-package com.myjb.dev.myapplication;
+package com.myjb.dev.myapplication
 
-import android.content.Context;
-import android.os.AsyncTask;
-
-import com.myjb.dev.network.OnImageLinkListener;
-import com.myjb.dev.network.jsoup.ImageScraping;
-import com.myjb.dev.network.retrofit.ImageCrawler;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.List;
-
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
-import okhttp3.HttpUrl;
-
-import static org.junit.Assert.*;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import com.myjb.dev.network.jsoup.ImageScraping
+import com.myjb.dev.network.retrofit.ImageCrawler
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import org.junit.Assert
+import org.junit.Test
+import org.junit.runner.RunWith
 
 /**
  * Instrumented test, which will execute on an Android device.
  *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * @see [Testing documentation](http://d.android.com/tools/testing)
  */
-@RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
-
+@RunWith(AndroidJUnit4::class)
+class ExampleInstrumentedTest {
     @Test
-    public void ImageCrawlerTest() throws Exception {
+    @Throws(Exception::class)
+    fun imageCrawlerTest() {
         // Context of the app under test.
-        final Context appContext = InstrumentationRegistry.getTargetContext();
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val url = appContext.getString(R.string.target_url).toHttpUrlOrNull()
 
-        ImageCrawler crawler = new ImageCrawler(HttpUrl.parse(appContext.getString(R.string.target_url)).newBuilder("\\").build(), false);
-        crawler.crawlPage(HttpUrl.parse(appContext.getString(R.string.target_url)), new OnImageLinkListener() {
-            @Override
-            public void onImageLinkResult(List<String> imageUrls) {
-                assertEquals(488, imageUrls.size());
-            }
-        });
+        val crawler = ImageCrawler(url?.newBuilder("\\")?.build()!!, false)
+        crawler.crawlPage(url)
     }
 
     @Test
-    public void ImageScrapingTest() throws Exception {
+    @Throws(Exception::class)
+    fun imageScrapingTest() {
         // Context of the app under test.
-        final Context appContext = InstrumentationRegistry.getTargetContext();
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
 
-        new ImageScraping(appContext.getString(R.string.target_url), false, new OnImageLinkListener() {
-            @Override
-            public void onImageLinkResult(List<String> imageUrls) {
-                assertEquals(488, imageUrls.size());
-            }
-        }).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        val imageUrls =
+            ImageScraping(appContext.getString(R.string.target_url), false).basicVersion()
+        Assert.assertEquals(488, imageUrls?.size?.toLong())
     }
 }

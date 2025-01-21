@@ -1,139 +1,141 @@
-package com.myjb.dev.network.jsoup;
+package com.myjb.dev.network.jsoup
 
-import android.os.AsyncTask;
-import android.util.Log;
+import android.util.Log
+import com.myjb.dev.myapplication.BuildConfig
+import org.jsoup.Connection
+import org.jsoup.Jsoup
+import java.io.IOException
+import java.net.MalformedURLException
+import java.net.UnknownHostException
 
-import com.myjb.dev.myapplication.BuildConfig;
-import com.myjb.dev.network.OnImageLinkListener;
+private const val TAG = "ImageScraping"
 
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.NonNull;
-
-public class ImageScraping extends AsyncTask<Void, Void, List<String>> {
-
-    private final static String TAG = "ImageScraping";
-
-    private String url;
-    private boolean isOnlySection;
-    private OnImageLinkListener listener;
-
-    public ImageScraping(@NonNull String url, boolean isOnlySection, @NonNull OnImageLinkListener listener) {
-        this.url = url;
-        this.isOnlySection = isOnlySection;
-        this.listener = listener;
-    }
-
-    @Override
-    protected List<String> doInBackground(Void... params) {
-        return basicVersion();
-    }
-
-    @Override
-    protected void onPostExecute(List<String> imageUrls) {
-        if (listener != null)
-            listener.onImageLinkResult(imageUrls);
-    }
-
-    private List<String> basicVersion() {
+@Deprecated("TODO mvm")
+class ImageScraping(private val url: String, private val isOnlySection: Boolean) {
+    fun basicVersion(): List<String>? {
         try {
-            long init = System.currentTimeMillis();
+            val init = System.currentTimeMillis()
 
-            Document doc = Jsoup.connect(url).get();
+            val doc = Jsoup.connect(url)
+                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
+                .header("scheme", "https")
+                .header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
+                .header("accept-encoding", "gzip, deflate, br")
+                .header("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6")
+                .header("cache-control", "no-cache")
+                .header("pragma", "no-cache")
+                .header("upgrade-insecure-requests", "1")
+                .get()
 
-            long connect = System.currentTimeMillis();
-            checkTime("getImageLinkUrl", "connect", init);
+//            val doc = con
+//                .header(":authority", "pixabay.com")
+//                .header(":method", "GET")
+//                .header(":path", "/ko/photos/?q=test")
+//                .header(":scheme", "https")
+//                .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+//                .header("Accept-encoding", "gzip, deflate, br, zstd")
+//                .header("Accept-language", "ko-KR,ko;q=0.9")
+//
+//                .header("Dnt", "1")
+//                .header("Priority", "u=0, i")
+//                .header("Sec-ch-ua", "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"")
+//                .header("sec-ch-ua-mobile", "?0")
+//
+//                .header("sec-ch-ua-mobile", "?0")
+//                .header("sec-ch-ua-platform", "\"Windows\"")
+//                .header("sec-fetch-dest", "document")
+//                .header("sec-fetch-mode", "navigate")
+//                .header("sec-fetch-site", "none")
+//                .header("sec-fetch-user", "?1")
+//                .header("upgrade-insecure-requests", "1")
+//
+//                .get()
 
-            String filter = null;
-            if (isOnlySection)
-                filter = "img[class=picture]";
-            else
-                filter = "img[src~=(?i)\\.(png|jpe?g|gif)]";
-            Elements elements = doc.select(filter);
+            val connect = System.currentTimeMillis()
+            checkTime("getImageLinkUrl", "connect", init)
 
-            long select = System.currentTimeMillis();
-            checkTime("getImageLinkUrl", "select", connect);
+            val filter: String = if (isOnlySection) {
+                "img[class=picture]"
+            } else {
+                "img[src~=(?i)\\.(png|jpe?g|gif)]"
+            }
+            val elements = doc.select(filter)
 
-            List<String> imageUrls = new ArrayList<String>();
-            for (Element element : elements) {
-                imageUrls.add(element.absUrl("src"));
+            val select = System.currentTimeMillis()
+            checkTime("getImageLinkUrl", "select", connect)
+
+            val imageUrls: MutableList<String> = ArrayList()
+            for (element in elements) {
+                imageUrls.add(element.absUrl("src"))
             }
 
-            checkTime("getImageLinkUrl", "add", select);
+            checkTime("getImageLinkUrl", "add", select)
 
-            Log.e(TAG, "[getImageLinkUrl] list.size : " + imageUrls.size());
-            return imageUrls;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "[getImageLinkUrl] list.size : " + imageUrls.size)
+            return imageUrls
+        } catch (e: MalformedURLException) {
+            e.printStackTrace()
+        } catch (e: UnknownHostException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
 
-        return null;
+        return null
     }
 
-    private List<String> upgradeVersion() {
+    private fun upgradeVersion(): List<String>? {
         try {
-            long init = System.currentTimeMillis();
+            val init = System.currentTimeMillis()
 
-            Connection.Response response = Jsoup.connect(url)
-                    .method(Connection.Method.GET)
-                    .execute();
+            val response = Jsoup.connect(url)
+                .method(Connection.Method.GET)
+                .execute()
 
-            long connect = System.currentTimeMillis();
-            checkTime("getImageLinkUrl", "connect", init);
+            val connect = System.currentTimeMillis()
+            checkTime("getImageLinkUrl", "connect", init)
 
-            String replaceBody = response.body()
-                    .replaceAll("<(/?)(head|script|meta|ul|link|p|li)([^<>]*)>", "")
-                    .replaceAll("<!--.*-->", "")
-                    .trim();
+            val replaceBody = response.body()
+                .replace("<(/?)(head|script|meta|ul|link|p|li)([^<>]*)>".toRegex(), "")
+                .replace("<!--.*-->".toRegex(), "")
+                .trim { it <= ' ' }
 
-            Document doc = Jsoup.parse(replaceBody);
+            val doc = Jsoup.parse(replaceBody)
 
-            String filter = null;
-            if (isOnlySection)
-                filter = "img[class=picture]";
-            else
-                filter = "img[src~=(?i)\\.(png|jpe?g|gif)]";
-            Elements elements = doc.select(filter);
+            val filter = if (isOnlySection) {
+                "img[class=picture]"
+            } else {
+                "img[src~=(?i)\\.(png|jpe?g|gif)]"
+            }
+            val elements = doc.select(filter)
 
-            long select = System.currentTimeMillis();
-            checkTime("getImageLinkUrl", "select", connect);
+            val select = System.currentTimeMillis()
+            checkTime("getImageLinkUrl", "select", connect)
 
-            List<String> imageUrls = new ArrayList<String>();
-            for (Element element : elements) {
-                imageUrls.add(element.absUrl("src"));
+            val imageUrls: MutableList<String> = ArrayList()
+            for (element in elements) {
+                imageUrls.add(element.absUrl("src"))
             }
 
-            checkTime("getImageLinkUrl", "add", select);
+            checkTime("getImageLinkUrl", "add", select)
 
-            Log.e(TAG, "[getImageLinkUrl] list.size : " + imageUrls.size());
-            return imageUrls;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "[getImageLinkUrl] list.size : " + imageUrls.size)
+            return imageUrls
+        } catch (e: MalformedURLException) {
+            e.printStackTrace()
+        } catch (e: UnknownHostException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
 
-        return null;
+        return null
     }
 
-    private static void checkTime(String method, String name, long previousTime) {
-        if (BuildConfig.DEBUG)
-            Log.e(TAG, "[" + method + "] " + name + " : " + (System.currentTimeMillis() - previousTime));
+    private fun checkTime(method: String, name: String, previousTime: Long) {
+        if (BuildConfig.DEBUG) Log.e(
+            TAG,
+            "[" + method + "] " + name + " : " + (System.currentTimeMillis() - previousTime)
+        )
     }
 }

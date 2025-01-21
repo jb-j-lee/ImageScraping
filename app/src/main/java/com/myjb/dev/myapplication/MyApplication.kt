@@ -1,10 +1,7 @@
-package com.myjb.dev.myapplication;
+package com.myjb.dev.myapplication
 
-import android.app.Application;
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-public class MyApplication extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-}
+@HiltAndroidApp
+class MyApplication : Application()

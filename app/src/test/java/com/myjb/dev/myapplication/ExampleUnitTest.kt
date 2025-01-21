@@ -1,48 +1,32 @@
-package com.myjb.dev.myapplication;
+package com.myjb.dev.myapplication
 
-import android.content.Context;
-import android.os.AsyncTask;
-
-import com.myjb.dev.network.OnImageLinkListener;
-import com.myjb.dev.network.jsoup.ImageScraping;
-import com.myjb.dev.network.retrofit.ImageCrawler;
-
-import org.junit.Test;
-
-import java.util.List;
-
-import okhttp3.HttpUrl;
-
-import static org.junit.Assert.*;
+import com.myjb.dev.network.jsoup.ImageScraping
+import com.myjb.dev.network.retrofit.ImageCrawler
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import org.junit.Assert
+import org.junit.Test
 
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * @see [Testing documentation](http://d.android.com/tools/testing)
  */
-public class ExampleUnitTest {
+class ExampleUnitTest {
     @Test
-    public void ImageCrawlerTest() throws Exception {
-        String targetUrl = "http://www.gettyimagesgallery.com/collections/archive/slim-aarons.aspx";
+    @Throws(Exception::class)
+    fun imageCrawlerTest() {
+        val targetUrl = "http://www.gettyimagesgallery.com/collections/archive/slim-aarons.aspx"
 
-        ImageCrawler crawler = new ImageCrawler(HttpUrl.parse(targetUrl).newBuilder("\\").build(), false);
-        crawler.crawlPage(HttpUrl.parse(targetUrl), new OnImageLinkListener() {
-            @Override
-            public void onImageLinkResult(List<String> imageUrls) {
-                assertEquals(488, imageUrls.size());
-            }
-        });
+        val crawler = ImageCrawler(targetUrl.toHttpUrlOrNull()?.newBuilder("\\")?.build()!!, false)
+        crawler.crawlPage(targetUrl.toHttpUrlOrNull())
     }
 
     @Test
-    public void ImageScrapingTest() throws Exception {
-        String targetUrl = "http://www.gettyimagesgallery.com/collections/archive/slim-aarons.aspx";
+    @Throws(Exception::class)
+    fun imageScrapingTest() {
+        val targetUrl = "http://www.gettyimagesgallery.com/collections/archive/slim-aarons.aspx"
 
-        new ImageScraping(targetUrl, false, new OnImageLinkListener() {
-            @Override
-            public void onImageLinkResult(List<String> imageUrls) {
-                assertEquals(488, imageUrls.size());
-            }
-        }).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        val imageUrls = ImageScraping(targetUrl, false).basicVersion()
+        Assert.assertEquals(488, imageUrls?.size?.toLong())
     }
 }

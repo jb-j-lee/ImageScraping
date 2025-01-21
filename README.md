@@ -26,9 +26,46 @@ For an example, see this sample's `target_url` string.xml.
 - Gradle 8.7
 
 
+# Language
+
+- [Kotlin](https://kotlinlang.org)
+
+
+# JetPack [AAC(Android Architecture Components)](https://blog.naver.com/dev2jb/223230422126)
+
+- Data Binding - Requires kapt plugin
+- LifeCycles
+- LiveData
+- ViewModel
+
+
+# UI
+
+- SplashScreen
+- MainActivity
+- Light and Dark Mode
+
+# Architectural Patterns
+
+- ![MVVM](/screen/mvvm.png)
+
+
+# Dependency Injection
+
+- [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Use Kapt plugin or Ksp plugin
+
+
+# Asynchronous
+
+- Coroutine
+- Flow
+- Sealed class
+
+
 # 3rd Party Libraries
 
 - [Jsoup](https://github.com/jhy/jsoup)
+- [Retrofit](https://github.com/square/retrofit)
 
 
 # Build Dependency
@@ -36,6 +73,12 @@ For an example, see this sample's `target_url` string.xml.
 - [version catalog](https://developer.android.com/build/migrate-to-catalogs)
 
 
+# Troubleshooting
+- Migrate from kapt to KSP : https://developer.android.com/build/migrate-to-ksp
+- Migrate your splash screen implementation to Android 12 and later : https://developer.android.com/develop/ui/views/launch/splash-screen/migrate
+
+
+****
 License
 -------
 

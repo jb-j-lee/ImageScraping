@@ -3,9 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
-//    alias(libs.plugins.navigation.safeargs.kotlin)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -50,15 +49,17 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.swiperefreshlayout)
 
     // LifeCycle
     implementation(libs.bundles.lifecycle)
 
     // Hilt
     implementation(libs.bundles.hilt)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     // Jsoup : https://jsoup.org/
     implementation(libs.jsoup)
