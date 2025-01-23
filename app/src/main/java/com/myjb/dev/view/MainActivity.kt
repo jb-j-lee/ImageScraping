@@ -10,7 +10,7 @@ import com.myjb.dev.model.data.METHOD
 import com.myjb.dev.model.remote.APIResponse
 import com.myjb.dev.myapplication.R
 import com.myjb.dev.myapplication.databinding.ActivityMainBinding
-import com.myjb.dev.viewmodel.UrlViewModel
+import com.myjb.dev.viewmodel.ScrapingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
@@ -19,14 +19,15 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-    private val viewModel: UrlViewModel by viewModels()
+    private val viewModel: ScrapingViewModel by viewModels()
 
-    private val adapter: UrlAdapter by lazy {
-        UrlAdapter(this)
+    private val adapter: ScrapingAdapter by lazy {
+        ScrapingAdapter(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
+
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
@@ -51,19 +52,17 @@ class MainActivity : AppCompatActivity() {
         viewModel.result.observe(this) {
             when (it) {
                 is APIResponse.Success -> {
-                    binding.progressBar.hide()
-                    binding.swipeRefreshLayout.isRefreshing = false
+                    hideProgress()
 
                     adapter.submitList(it.data)
                 }
 
                 APIResponse.Loading -> {
-                    binding.progressBar.show()
+                    showProgress()
                 }
 
                 is APIResponse.Error -> {
-                    binding.progressBar.hide()
-                    binding.swipeRefreshLayout.isRefreshing = false
+                    hideProgress()
 
                     adapter.submitList(emptyList())
                 }
@@ -77,5 +76,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun onJsoupClicked(targetUrl: String) {
         viewModel.getImageUrls(METHOD.JSOUP, targetUrl)
+    }
+
+    private fun showProgress() {
+        binding.progressBar.show()
+        binding.swipeRefreshLayout.isRefreshing = false
+    }
+
+    private fun hideProgress() {
+        binding.progressBar.hide()
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 }

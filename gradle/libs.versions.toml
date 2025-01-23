@@ -31,6 +31,7 @@ navigationFragmentKtx = "2.8.5"
 okhttpBom = "4.12.0"
 preferenceKtx = "1.2.1"
 recyclerview = "1.4.0"
+recyclerviewAnimators = "4.0.2"
 retrofitBom = "2.11.0"
 roomKtx = "2.6.1"
 securityCryptoKtx = "1.1.0-alpha06"
@@ -97,6 +98,7 @@ okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref 
 okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttpBom" }
 okhttp-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttpBom" }
 okhttp-urlconnection = { module = "com.squareup.okhttp3:okhttp-urlconnection", version.ref = "okhttpBom" }
+recyclerview-animators = { module = "jp.wasabeef:recyclerview-animators", version.ref = "recyclerviewAnimators" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitBom" }
 retrofit-bom = { group = "com.squareup.retrofit2", name = "retrofit-bom", version.ref = "retrofitBom" }
 retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitBom" }

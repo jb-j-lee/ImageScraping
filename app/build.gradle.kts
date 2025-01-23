@@ -84,7 +84,7 @@ dependencies {
 //    debugImplementation(libs.leakcanary.android)
 
     //https://github.com/wasabeef/recyclerview-animators
-    implementation("jp.wasabeef:recyclerview-animators:4.0.2")
+    implementation(libs.recyclerview.animators)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

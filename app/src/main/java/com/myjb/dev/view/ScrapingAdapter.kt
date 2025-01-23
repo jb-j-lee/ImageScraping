@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.myjb.dev.myapplication.databinding.ItemTextviewBinding
 
-class UrlAdapter(private val context: Context) :
+class ScrapingAdapter(private val context: Context) :
     ListAdapter<String, UrlViewHolder>(DiffUtilCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UrlViewHolder {
