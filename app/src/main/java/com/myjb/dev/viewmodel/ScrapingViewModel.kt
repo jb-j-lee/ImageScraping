@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myjb.dev.model.Repository
-import com.myjb.dev.model.data.METHOD
 import com.myjb.dev.model.remote.APIResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,14 +20,9 @@ internal class ScrapingViewModel @Inject constructor(
     val result: LiveData<APIResponse>
         get() = _result
 
-    fun getImageUrls(method: METHOD, text: String) {
+    fun getImageUrls() {
         viewModelScope.launch(Dispatchers.Main) {
-            if (text.isBlank()) {
-                _result.value = APIResponse.Success(mutableListOf())
-                return@launch
-            }
-
-            repository.getImageUrls(method = method, text = text).collect {
+            repository.getImageUrls().collect {
                 _result.value = it
             }
         }

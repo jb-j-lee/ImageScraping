@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
-import com.myjb.dev.model.data.METHOD
 import com.myjb.dev.model.remote.APIResponse
-import com.myjb.dev.myapplication.R
 import com.myjb.dev.myapplication.databinding.ActivityMainBinding
 import com.myjb.dev.viewmodel.ScrapingViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,14 +38,11 @@ class MainActivity : AppCompatActivity() {
             DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         binding.recyclerView.addItemDecoration(itemDecoration)
 
-        val targetUrl = getString(R.string.target_url)
-
         binding.swipeRefreshLayout.setOnRefreshListener {
-            onRetrofitClicked(targetUrl)
+            onRetrofitClicked()
         }
 
-        binding.retrofit.setOnClickListener { onRetrofitClicked(targetUrl) }
-        binding.jsoup.setOnClickListener { onJsoupClicked(targetUrl) }
+        binding.retrofit.setOnClickListener { onRetrofitClicked() }
 
         viewModel.result.observe(this) {
             when (it) {
@@ -70,12 +65,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun onRetrofitClicked(targetUrl: String) {
-        viewModel.getImageUrls(METHOD.RETROFIT, targetUrl)
-    }
-
-    private fun onJsoupClicked(targetUrl: String) {
-        viewModel.getImageUrls(METHOD.JSOUP, targetUrl)
+    private fun onRetrofitClicked() {
+        viewModel.getImageUrls()
     }
 
     private fun showProgress() {

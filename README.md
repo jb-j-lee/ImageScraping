@@ -10,12 +10,10 @@
 
 This sample demonstrates how to scraping image url at site on Android.
 
-```xml
-<string name="target_url">"https://pixabay.com/ko/photos/?q=test"</string>
-```
+https://pixabay.com/ko/photos/?q=test
 
 In some cases, you may want to customize this specific url. When doing so, change the url.
-For an example, see this sample's `target_url` string.xml.
+For example, see Constants.BASE_URL and the ApiService getPhotos method in this sample.
 
 # Android
 
@@ -48,7 +46,7 @@ For an example, see this sample's `target_url` string.xml.
 
 # Architectural Patterns
 
-- ![MVVM](/screen/mvvm.png)
+- [MVVM](/screen/mvvm.png)
 
 
 # Dependency Injection

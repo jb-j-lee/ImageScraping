@@ -6,7 +6,6 @@ import com.myjb.dev.model.data.Constants
 import com.myjb.dev.model.remote.datasource.ApiService
 import com.myjb.dev.model.remote.datasource.DataSource
 import com.myjb.dev.model.remote.datasource.JsoupConverter
-import com.myjb.dev.model.remote.datasource.JsoupDataSource
 import com.myjb.dev.model.remote.datasource.RetrofitDataSource
 import com.myjb.dev.myapplication.BuildConfig
 import dagger.Module
@@ -24,22 +23,6 @@ import java.lang.reflect.Type
 import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
-
-@Qualifier
-@Retention(AnnotationRetention.RUNTIME)
-annotation class JsoupAnnotation
-
-@Module
-@InstallIn(SingletonComponent::class)
-object JsoupModule {
-
-    @Singleton
-    @JsoupAnnotation
-    @Provides
-    fun provideJsoupDataSource(): DataSource {
-        return JsoupDataSource
-    }
-}
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
@@ -88,7 +71,7 @@ object RetrofitModule {
                     annotations: Array<Annotation>,
                     retrofit: Retrofit,
                 ): Converter<ResponseBody, *> {
-                    return JsoupConverter(retrofit.baseUrl().toString(), false)
+                    return JsoupConverter(isOnlySection = false)
                 }
             })
             .build()
@@ -115,11 +98,9 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideRepository(
-        @JsoupAnnotation jsoupDataSource: DataSource,
         @RetrofitAnnotation retrofitDataSource: DataSource,
     ): Repository {
         return RepositoryImp(
-            jsoupDataSource = jsoupDataSource,
             retrofitDataSource = retrofitDataSource
         )
     }

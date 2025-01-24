@@ -79,21 +79,7 @@
         app:borderWidth="0dp"
         app:fabSize="auto"
         app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|start"
-        app:srcCompat="@drawable/ic_retrofit"
-        app:useCompatPadding="true" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/jsoup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:contentDescription="@string/action_jsoup"
-        android:padding="0dp"
-        app:borderWidth="0dp"
-        app:fabSize="auto"
-        app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/ic_jsoup"
+        app:srcCompat="@drawable/ic_retrofit"
         app:useCompatPadding="true" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

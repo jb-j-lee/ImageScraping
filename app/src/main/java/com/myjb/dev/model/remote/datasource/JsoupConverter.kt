@@ -9,7 +9,7 @@ import java.io.IOException
 
 private const val TAG = "JsoupConverter"
 
-class JsoupConverter(private val url: String, private val isOnlySection: Boolean) :
+class JsoupConverter(private val isOnlySection: Boolean) :
     Converter<ResponseBody, List<String>> {
 
     @Throws(IOException::class)
@@ -21,8 +21,6 @@ class JsoupConverter(private val url: String, private val isOnlySection: Boolean
         val init = System.currentTimeMillis()
 
         val document = Jsoup.parse(text)
-        //FIXME
-//        document.setBaseUri(url)
 
         val parse = System.currentTimeMillis()
         checkTime(name = "parse", time = init)
@@ -38,7 +36,10 @@ class JsoupConverter(private val url: String, private val isOnlySection: Boolean
 
         val imageUrls: MutableList<String> = ArrayList()
         for (element in elements) {
-            imageUrls.add(element.absUrl("src"))
+            val src = element.absUrl("src")
+            if (src.isNotBlank()) {
+                imageUrls.add(src)
+            }
         }
         checkTime(name = "add", time = select)
 
@@ -50,6 +51,6 @@ class JsoupConverter(private val url: String, private val isOnlySection: Boolean
             return
         }
 
-        Log.e(TAG, "[convert] $name : ${(System.currentTimeMillis() - time)}")
+        Log.e(TAG, "[convert] $name : ${(System.currentTimeMillis() - time)}ms")
     }
 }

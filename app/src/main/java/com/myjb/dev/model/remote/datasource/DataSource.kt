@@ -4,5 +4,5 @@ import com.myjb.dev.model.remote.APIResponse
 import kotlinx.coroutines.flow.Flow
 
 interface DataSource {
-    suspend fun getImageUrls(url: String): Flow<APIResponse>
+    suspend fun getImageUrls(): Flow<APIResponse>
 }
