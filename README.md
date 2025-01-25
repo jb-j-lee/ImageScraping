@@ -10,7 +10,7 @@
 
 This sample demonstrates how to scraping image url at site on Android.
 
-https://pixabay.com/ko/photos/?q=test
+https://pixabay.com/ko/photos/search/magic/
 
 In some cases, you may want to customize this specific url. When doing so, change the url.
 For example, see Constants.BASE_URL and the ApiService getPhotos method in this sample.
