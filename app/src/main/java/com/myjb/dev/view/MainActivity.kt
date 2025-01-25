@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
             DeviceModule(),
 
             LogsModule(),
-            TimberModule(),
+            TimberModule(application.packageName + ".provider"),
         ).build()
     }
 }

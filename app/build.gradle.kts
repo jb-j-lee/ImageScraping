@@ -90,7 +90,7 @@ dependencies {
     //https://github.com/wasabeef/recyclerview-animators
     implementation(libs.recyclerview.animators)
 
-    // DebugDrawer (Multi Debug Tool) : https://github.com/palaima/DebugDrawer
+    // DebugDrawer (Multi Debug Tool) : https://github.com/lenguyenthanh/DebugDrawer
     implementation(libs.debugdrawer.base)
 
     debugImplementation(libs.debugdrawer)
