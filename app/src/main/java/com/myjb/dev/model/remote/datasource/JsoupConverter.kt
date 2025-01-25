@@ -1,13 +1,11 @@
 package com.myjb.dev.model.remote.datasource
 
-import android.util.Log
 import com.myjb.dev.myapplication.BuildConfig
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
 import retrofit2.Converter
+import timber.log.Timber
 import java.io.IOException
-
-private const val TAG = "JsoupConverter"
 
 class JsoupConverter(private val isOnlySection: Boolean) :
     Converter<ResponseBody, List<String>> {
@@ -51,6 +49,6 @@ class JsoupConverter(private val isOnlySection: Boolean) :
             return
         }
 
-        Log.e(TAG, "[convert] $name : ${(System.currentTimeMillis() - time)}ms")
+        Timber.e("[convert] $name : ${(System.currentTimeMillis() - time)}ms")
     }
 }

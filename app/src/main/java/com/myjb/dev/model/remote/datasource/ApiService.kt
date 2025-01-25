@@ -1,9 +1,13 @@
 package com.myjb.dev.model.remote.datasource
 
-import retrofit2.Call
-import retrofit2.http.GET
+import retrofit2.Response
+import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
-    @GET("ko/photos/?q=test")
-    fun getPhotos(): Call<List<String>>
+    @POST("{locale}/photos/search/{query}")
+    suspend fun getPhotos(
+        @Path(value = "locale") locale: String = "ko",
+        @Path(value = "query") query: String = "magic",
+    ): Response<List<String>>
 }

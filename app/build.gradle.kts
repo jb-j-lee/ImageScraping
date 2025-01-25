@@ -86,6 +86,22 @@ dependencies {
     //https://github.com/wasabeef/recyclerview-animators
     implementation(libs.recyclerview.animators)
 
+    // DebugDrawer (Multi Debug Tool) : https://github.com/palaima/DebugDrawer
+    implementation(libs.debugdrawer.base)
+
+    debugImplementation(libs.debugdrawer)
+    releaseImplementation(libs.debugdrawer.no.op)
+
+    implementation(libs.debugdrawer.commons)
+
+    implementation(libs.timber)
+    implementation(libs.debugdrawer.timber)
+
+    implementation(libs.lynx)
+    debugImplementation(libs.chuck.library)
+    releaseImplementation(libs.chuck.library.no.op)
+    implementation(libs.debugdrawer.logs)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

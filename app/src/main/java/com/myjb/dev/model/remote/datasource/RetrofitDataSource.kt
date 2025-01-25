@@ -1,14 +1,12 @@
 package com.myjb.dev.model.remote.datasource
 
-import android.util.Log
 import com.myjb.dev.model.remote.APIResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 import kotlin.system.measureTimeMillis
-
-private const val TAG = "RetrofitDataSource"
 
 class RetrofitDataSource(private val apiService: ApiService) : DataSource {
     override suspend fun getImageUrls(): Flow<APIResponse> = flow {
@@ -16,11 +14,21 @@ class RetrofitDataSource(private val apiService: ApiService) : DataSource {
 
         try {
             val time = measureTimeMillis {
-                val result = apiService.getPhotos().execute().body()
-                Log.e(TAG, "[getImageUrls] list size : " + result?.size)
-                emit(APIResponse.Success(result!!))
+                val response = apiService.getPhotos()
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    Timber.e("[getImageUrls] list size : " + body?.size)
+                    emit(APIResponse.Success(body!!))
+                } else {
+                    emit(
+                        APIResponse.Error(
+                            errorCode = response.code(),
+                            message = response.message()
+                        )
+                    )
+                }
             }
-            Log.e(TAG, "[getImageUrls] total time : ${time}ms")
+            Timber.e("[getImageUrls] total time : ${time}ms")
         } catch (e: Exception) {
             e.printStackTrace()
         }

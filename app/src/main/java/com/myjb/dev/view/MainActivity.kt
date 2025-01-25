@@ -7,9 +7,14 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.myjb.dev.model.remote.APIResponse
+import com.myjb.dev.myapplication.BuildConfig
 import com.myjb.dev.myapplication.databinding.ActivityMainBinding
 import com.myjb.dev.viewmodel.ScrapingViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import io.palaima.debugdrawer.DebugDrawer
+import io.palaima.debugdrawer.commons.DeviceModule
+import io.palaima.debugdrawer.logs.LogsModule
+import io.palaima.debugdrawer.timber.TimberModule
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 @AndroidEntryPoint
@@ -31,12 +36,18 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        binding.recyclerView.setAdapter(adapter)
-        binding.recyclerView.setItemAnimator(SlideInUpAnimator())
+        if (BuildConfig.DEBUG) {
+            enableDebugDrawable()
+        }
 
-        val itemDecoration: ItemDecoration =
-            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-        binding.recyclerView.addItemDecoration(itemDecoration)
+        with(binding) {
+            recyclerView.setAdapter(adapter)
+            recyclerView.setItemAnimator(SlideInUpAnimator())
+
+            val itemDecoration: ItemDecoration =
+                DividerItemDecoration(this@MainActivity, DividerItemDecoration.VERTICAL)
+            recyclerView.addItemDecoration(itemDecoration)
+        }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             onRetrofitClicked()
@@ -77,5 +88,14 @@ class MainActivity : AppCompatActivity() {
     private fun hideProgress() {
         binding.progressBar.hide()
         binding.swipeRefreshLayout.isRefreshing = false
+    }
+
+    private fun enableDebugDrawable() {
+        DebugDrawer.Builder(this).modules(
+            DeviceModule(),
+
+            LogsModule(),
+            TimberModule(),
+        ).build()
     }
 }
