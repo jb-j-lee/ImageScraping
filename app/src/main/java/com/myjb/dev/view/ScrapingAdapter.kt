@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.myjb.dev.myapplication.databinding.ItemTextviewBinding
+import com.myjb.dev.myapplication.databinding.ItemMainBinding
 
 class ScrapingAdapter(private val context: Context) :
     ListAdapter<String, UrlViewHolder>(DiffUtilCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UrlViewHolder {
         return UrlViewHolder(
-            ItemTextviewBinding.inflate(
+            ItemMainBinding.inflate(
                 LayoutInflater.from(context),
                 parent,
                 false
@@ -26,7 +26,7 @@ class ScrapingAdapter(private val context: Context) :
     }
 }
 
-class UrlViewHolder(private val binding: ItemTextviewBinding) :
+class UrlViewHolder(private val binding: ItemMainBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: String) {

@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         with(binding) {
+            lifecycleOwner = this@MainActivity
+            model = viewModel
+
             recyclerView.setAdapter(adapter)
             recyclerView.setItemAnimator(SlideInUpAnimator())
 

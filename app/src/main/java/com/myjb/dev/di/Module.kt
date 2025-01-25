@@ -3,9 +3,9 @@ package com.myjb.dev.di
 import com.myjb.dev.model.Repository
 import com.myjb.dev.model.RepositoryImp
 import com.myjb.dev.model.data.Constants
-import com.myjb.dev.model.remote.datasource.ApiService
+import com.myjb.dev.model.remote.api.ApiService
 import com.myjb.dev.model.remote.datasource.DataSource
-import com.myjb.dev.model.remote.datasource.JsoupConverter
+import com.myjb.dev.model.remote.converter.JsoupConverter
 import com.myjb.dev.model.remote.datasource.RetrofitDataSource
 import com.myjb.dev.myapplication.BuildConfig
 import dagger.Module

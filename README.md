@@ -65,6 +65,7 @@ For example, see Constants.BASE_URL and the ApiService getPhotos method in this 
 
 - [Jsoup](https://github.com/jhy/jsoup)
 - [Retrofit](https://github.com/square/retrofit)
+- [Glide](https://github.com/bumptech/glide) - https://bumptech.github.io/glide/doc/configuration.html
 
 
 # Build Dependency

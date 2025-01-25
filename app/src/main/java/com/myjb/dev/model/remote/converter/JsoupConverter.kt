@@ -1,4 +1,4 @@
-package com.myjb.dev.model.remote.datasource
+package com.myjb.dev.model.remote.converter
 
 import com.myjb.dev.myapplication.BuildConfig
 import okhttp3.ResponseBody
@@ -35,13 +35,26 @@ class JsoupConverter(private val isOnlySection: Boolean) :
         val imageUrls: MutableList<String> = ArrayList()
         for (element in elements) {
             val src = element.absUrl("src")
-            if (src.isNotBlank()) {
-                imageUrls.add(src)
+            val url = isImage(src)
+            if (!url.isNullOrBlank()) {
+                imageUrls.add(url)
             }
         }
         checkTime(name = "add", time = select)
 
         return imageUrls
+    }
+
+    private fun isImage(url: String): String? {
+        if (url.isBlank()) {
+            return null
+        }
+
+        if (url.contains(".jpg") || url.contains(".jpeg") || url.contains(".png")) {
+            return url.replace("&amp;", "&")
+        }
+
+        return null
     }
 
     private fun checkTime(name: String, time: Long) {

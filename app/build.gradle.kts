@@ -79,6 +79,10 @@ dependencies {
     implementation(platform(libs.retrofit.bom))
     implementation(libs.bundles.retrofit)
 
+    // Glide
+    implementation(libs.glide)
+    ksp(libs.glide.ksp)
+
     //TODO
     // Leakcanary (Memory Leak Debug Tool) : https://square.github.io/leakcanary
 //    debugImplementation(libs.leakcanary.android)
